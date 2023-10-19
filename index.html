@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Aplikasi Mesin Kasir</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="./assets/icon/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div id="koneksiServer" class="container-fluid">
+        <h1>Aplikasi Mesin Kasir</h1>
+        <div class="row">
+            <div class="col-md-6 col-lg-5 col-xl-4">
+                <input type="number" min="0" onkeydown="checkEnter(event)" id="barcodeInput" autofocus class="form-control" placeholder="Pindai barcode di sini" aria-label="Pindai barcode di sini" aria-describedby="basic-addon1">
+            </div>
+            <div class="col-md-6 col-lg-7 col-xl-8">
+
+            </div>
+        </div>
+            
+        
+        <div id="output">
+            <p>Status : -</p>
+        </div>
+        <table class="table table-bordered" id="cartTable">
+            <thead>
+                <tr>
+                    <th>Nama Produk</th>
+                    <th>Jumlah</th>
+                    <th>Harga (Rp)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <thead class="table-group-divider">
+                <tr>
+                    <th colspan="2">TOTAL HARGA</th>
+                    <th><strong>Rp<span class="totalPrice">0.00</span></strong></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+      <button style="display: none;" id="tombolTransaksi" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+        Toggle static offcanvas
+      </button>
+      
+      
+      <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="staticBackdropLabel">Transaksi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" onclick="barcodeInput.focus();" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <div class="mb-3 row">
+                <label for="TotalTransaksiJual" class="form-label">Total Pembeli</label>
+                <div class="col-12 input-group mb-3">
+                    <span class="input-group-text" id="TotalTransaksiJual">Rp</span>
+                    <input type="number" min="0" class="form-control totalPrice" value="0" aria-label="TotalTransaksiJual" aria-describedby="TotalTransaksiJual" readonly>
+                </div>
+                <label for="formTransaksiJual" class="form-label">Uang Pembeli</label>
+                <div class="col-12 input-group mb-3">
+                    <span class="input-group-text" id="formTransaksiJual">Rp</span>
+                    <input id="inputTransaksiJual" type="number" min="0" class="form-control" placeholder="0,00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
+                </div>
+            </div>              
+          </div>
+        </div>
+      </div>
+
+<script src="./assets/js/script.js"></script>
+<script src="./assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,8 @@
 <?php
+// Izinkan permintaan dari semua domain (ini bisa disesuaikan dengan kebutuhan)
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+
 // Koneksi ke database
 $mysqli = new mysqli("localhost", "root", "", "kasir");
 

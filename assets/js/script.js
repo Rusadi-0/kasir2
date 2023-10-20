@@ -5,6 +5,7 @@ const totalPriceDisplay0 = document.getElementsByClassName('totalPrice')[0];
 const totalPriceDisplay1 = document.getElementsByClassName('totalPrice')[1];
 const koneksiServer = document.getElementById('koneksiServer');
 const inputTransaksiJual = document.getElementById('inputTransaksiJual');
+const hasilKembalian = document.getElementById('hasilKembalian');
 let tombolTransaksi = document.getElementById('tombolTransaksi');
 let totalPrice = 0;
 const cart = {}; // Objek untuk melacak produk yang ditambahkan ke keranjang
@@ -78,7 +79,36 @@ function setupKasir(products) {
                 totalPriceBos += cart[barcode].price;
             }
             totalPriceDisplay0.textContent = formatRupiah(totalPriceBos);
-            totalPriceDisplay1.value = formatRupiah(totalPriceBos);
+            totalPriceDisplay1.textContent = formatRupiah(totalPriceBos);
+                     
+
+            inputTransaksiJual.addEventListener('input', function() {
+                            // Menghilangkan karakter non-angka
+            const sanitizedValue = inputTransaksiJual.value.replace(/\D/g, '');
+
+            // Memisahkan ribuan secara manual
+            const formattedValue = addThousandSeparators(sanitizedValue);
+
+            // Mengatur nilai input menjadi yang telah diformat
+            inputTransaksiJual.value = formattedValue;
+
+            const integerValue = parseInt(sanitizedValue, 10);
+
+                // Setel teks pada elemen <h2> dengan nilai dari elemen <input>
+                var totalKembalian = integerValue - totalPriceBos;
+                if(integerValue > totalPriceBos){
+                    hasilKembalian.textContent = formatRupiah(totalKembalian)
+                } else {
+                    hasilKembalian.textContent = formatRupiah(0)
+                }
+
+            
+            });
+
+
+            function addThousandSeparators(value) {
+                return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
 
             // Kosongkan input barcode
             barcodeInput.value = '';

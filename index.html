@@ -12,7 +12,8 @@
 </head>
 
 <body>
-    <div id="koneksiServer" class="container-fluid">
+  <h2 style="display: block;" id="loading">menghubungkan ke server . .</h2>
+    <div id="koneksiServer"  style="display: none;" class="container-fluid">
         <h1>Aplikasi Mesin Kasir</h1>
         <div class="row">
             <div class="col-md-6 col-lg-5 col-xl-4">
@@ -62,14 +63,14 @@
           <div>
             <div class="mb-3 row">
               <div class="col-12 mb-3">
-                <label for="formTransaksiJual" class="form-label">Total Harga</label>
+                <label for="formTransaksiJual" class="form-label">Total Harga digenapkan</label>
                 <h3><strong>Rp<span class="totalPrice">0.00</span></strong></h3>
               </div>
               <div class="col-12 mb-3">
                 <label for="formTransaksiJual" class="form-label">Uang Pembeli</label>
                 <div class="col-12 input-group mb-3">
                     <span class="input-group-text" id="formTransaksiJual">Rp</span>
-                    <input id="inputTransaksiJual" type="text" min="0" class="form-control" placeholder="0,00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
+                    <input id="inputTransaksiJual" disabled type="text" min="0" class="form-control" placeholder="0,00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
                 </div>
               </div>
               <div class="col-12">

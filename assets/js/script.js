@@ -1,4 +1,6 @@
 // ! VARIABEL 
+// const myHostname = window.location.hostname; //* untuk dijalankan ke htdocs
+const myHostname = "localhost"; //* untuk dijalankan ke dekstop
 const inputDigit = 5;
 const inputPersenUntung = 10;
 const loading = document.getElementById('loading');
@@ -15,6 +17,13 @@ const untungPersen = inputPersenUntung/100;
 const totalPrice = 0;
 const cart = {}; 
 
+
+
+barcodeInput.addEventListener("input", function (e) {
+    let input = e.target.value;
+    e.target.value = input.replace(/[^0-9]/g, "");
+});
+
     // menekan enter lanjut ke taransaksi
     function checkEnter(event) {
         if (event.key === "Enter") {
@@ -28,6 +37,11 @@ const cart = {};
     var startTime = new Date().getTime(); // Waktu mulai permintaan
 
     var xhr = new XMLHttpRequest();
+    
+    loading.innerHTML = "<center class='mt-5'>menghubungkan ke server. </center>"
+    setTimeout(function() {
+        loading.innerHTML = "<center class='mt-5'>Koneksi ke server terputus, silahkan refresh(f5).</center>"
+    }, 10000);
     
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -58,7 +72,7 @@ const cart = {};
         koneksiServer.innerHTML = "<h2>Koneksi ke server terputus.</h2>";
     };
     
-    xhr.open("GET", "http://192.168.1.118/getProducts.php", true);
+    xhr.open("GET", "http://" + myHostname + "/getProduk.php", true);
     xhr.send();
     
 
@@ -135,7 +149,11 @@ function setupKasir(products) {
             const genapHargaTotalRatusan = (Math.floor(totalPriceBos /100)*100);
             const hasilGenapHarga = genapHargaTotalRatusan - genapHargaTotalRibuan;
             if(digitTotalHarga < inputDigit){
-                var hasilDigenapkan = genapHargaTotalRibuan;
+                if(hasilGenapHarga > 500){
+                    var hasilDigenapkan = genapHargaTotalRibuan+1000;
+                } else {
+                    var hasilDigenapkan = genapHargaTotalRibuan;
+                }
             } else if(hasilGenapHarga < 200){
                 var hasilDigenapkan = genapHargaTotalRibuan;
             } else if(hasilGenapHarga < 500){
@@ -192,7 +210,7 @@ function setupKasir(products) {
                 output.innerHTML = '<p>Status : Produk tidak ditemukan.</p>';
                 // Tampilkan tombol Clear
                 
-                document.body.style.backgroundColor = "red";
+                document.body.style.backgroundColor = "purple";
                 setTimeout(function() {
                     alert("PRODUK TIDAK DITEMUKAN!!")
                     barcodeInput.value = '';

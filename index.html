@@ -12,14 +12,21 @@
 </head>
 
 <body>
-  <h2 style="display: block;" id="loading">menghubungkan ke server . .</h2>
+  <h2 style="display: block;" id="loading"></h2>
     <div id="koneksiServer"  style="display: none;" class="container-fluid">
         <h1>Aplikasi Mesin Kasir</h1>
         <div class="row">
             <div class="col-md-6 col-lg-5 col-xl-4">
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="bi bi-upc-scan"></i></span>
-                <input type="number" min="0" onkeydown="checkEnter(event)" id="barcodeInput" autofocus class="form-control" placeholder="Pindai barcode di sini" aria-label="Pindai barcode di sini" aria-describedby="basic-addon1">
+                <input pattern="[0-9]*" type="number" min="0" onkeydown="checkEnter(event)" id="barcodeInput" autofocus class="form-control" placeholder="Pindai barcode di sini" aria-label="Pindai barcode di sini" aria-describedby="basic-addon1">
+                  <script>
+                  document.getElementById("barcodeInput").addEventListener("input", function (e) {
+                      let input = e.target.value;
+                      e.target.value = input.replace(/[^0-9]/g, "");
+                  });
+                  </script>
+
               </div>
                 
             </div>

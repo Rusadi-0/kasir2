@@ -3,7 +3,6 @@ const myHostname = window.location.hostname; //* untuk dijalankan ke htdocs
 // const myHostname = "localhost"; //* untuk dijalankan ke dekstop
 const inputDigit = 5;
 const inputPersenUntung = 10;
-const loading = document.getElementById('loading');
 const barcodeInput = document.getElementById('barcodeInput');
 const output = document.getElementById('output');
 const cartTableBody = document.querySelector('#cartTable tbody');
@@ -54,11 +53,6 @@ barcodeInput.addEventListener("input", function (e) {
 
     var xhr = new XMLHttpRequest();
     
-    loading.innerHTML = "<center class='mt-5'>menghubungkan ke server. </center>"
-    setTimeout(function() {
-        loading.innerHTML = "<center class='mt-5'>Koneksi ke server terputus, silahkan refresh(f5).</center>"
-    }, 10000);
-    
     xhr.onload = function() {
         if (xhr.status === 200) {
             var endTime = new Date().getTime(); // Waktu selesai permintaan
@@ -72,11 +66,9 @@ barcodeInput.addEventListener("input", function (e) {
     
             console.warn("Waktu yang diperlukan: " + timeTaken + " ms");
             console.warn("Kecepatan: " + speed + " bytes/detik");
-            if(timeTaken > 10*1000){
-                loading.innerHTML = "Gagal terhubung ke server..";
+            if(timeTaken > 1*1000){
+                koneksiServer.innerHTML = "<h2>Koneksi ke server Lambat.</h2>";
             }else{
-                koneksiServer.style.display = "block";
-                loading.style.display = "none";
                 barcodeInput.focus();
             }
         } else {

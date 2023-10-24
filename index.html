@@ -14,19 +14,13 @@
 <body>
   <h2 style="display: block;" id="loading"></h2>
     <div id="koneksiServer"  style="display: none;" class="container-fluid">
-        <h1>Aplikasi Mesin Kasir</h1>
-        <div class="row">
+        <h1 class="my-3 text-center">Aplikasi Mesin Kasir</h1>
+        <hr>
+        <div class="row mt-4">
             <div class="col-md-6 col-lg-5 col-xl-4">
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="bi bi-upc-scan"></i></span>
                 <input pattern="[0-9]*" type="number" min="0" onkeydown="checkEnter(event)" id="barcodeInput" autofocus class="form-control" placeholder="Pindai barcode di sini" aria-label="Pindai barcode di sini" aria-describedby="basic-addon1">
-                  <script>
-                  document.getElementById("barcodeInput").addEventListener("input", function (e) {
-                      let input = e.target.value;
-                      e.target.value = input.replace(/[^0-9]/g, "");
-                  });
-                  </script>
-
               </div>
                 
             </div>
@@ -47,11 +41,17 @@
                     <th>Harga (Rp)</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
             <thead class="table-group-divider">
                 <tr>
                     <th colspan="2">TOTAL HARGA</th>
-                    <th><strong>Rp<span class="totalPrice">0.00</span></strong></th>
+                    <th><strong>Rp <span class="totalPrice">0.00</span></strong></th>
                 </tr>
             </thead>
         </table>
@@ -71,21 +71,22 @@
             <div class="mb-3 row">
               <div class="col-12 mb-3">
                 <label for="formTransaksiJual" class="form-label">Total Harga digenapkan</label>
-                <h3><strong>Rp<span class="totalPrice">0.00</span></strong></h3>
+                <h3><strong>Rp <span class="totalPrice">0.00</span></strong></h3>
               </div>
               <div class="col-12 mb-3">
                 <label for="formTransaksiJual" class="form-label">Uang Pembeli</label>
                 <div class="col-12 input-group mb-3">
-                    <span class="input-group-text" id="formTransaksiJual">Rp</span>
-                    <input id="inputTransaksiJual" disabled type="text" min="0" class="form-control" placeholder="0,00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
+                    <span class="input-group-text" id="formTransaksiJual">Rp </span>
+                    <input id="inputTransaksiJual" onkeydown="selesaiTransaksi(event)" disabled type="text" min="0" class="form-control" placeholder="0.00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
                 </div>
               </div>
               <div class="col-12">
                 <hr>
                 <label for="formTransaksiJual" class="form-label">Kembalian</label>
-                <h3><strong>Rp<span id="hasilKembalian">0.00</span></strong></h3>
+                <h3><strong><span id="hasilKembalian">Rp 0.00</span></strong></h3>
               </div>
-               
+               <input type="hidden" id="hasilTotalTransakasi" value="">
+               <input type="hidden" id="hasilKembalianTransakasi" value="">
             </div>              
           </div>
         </div>

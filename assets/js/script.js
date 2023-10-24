@@ -1,6 +1,6 @@
 // ! VARIABEL 
-// const myHostname = window.location.hostname; //* untuk dijalankan ke htdocs
-const myHostname = "localhost"; //* untuk dijalankan ke dekstop
+const myHostname = window.location.hostname; //* untuk dijalankan ke htdocs
+// const myHostname = "localhost"; //* untuk dijalankan ke dekstop
 const inputDigit = 5;
 const inputPersenUntung = 10;
 const loading = document.getElementById('loading');
@@ -13,11 +13,21 @@ const koneksiServer = document.getElementById('koneksiServer');
 const inputTransaksiJual = document.getElementById('inputTransaksiJual');
 const hasilKembalian = document.getElementById('hasilKembalian');
 const tombolTransaksi = document.getElementById('tombolTransaksi');
+const hasilTotalTransakasi = document.getElementById('hasilTotalTransakasi');
+const hasilKembalianTransakasi = document.getElementById('hasilKembalianTransakasi');
 const untungPersen = inputPersenUntung/100;
 const totalPrice = 0;
-const cart = {}; 
+const cart = {};
+if(Object.keys(cart).length == 0){
+    hasilTotalTransakasi.value = "";
+    hasilKembalianTransakasi.value = "";
+}
 
 
+document.getElementById("barcodeInput").addEventListener("input", function (e) {
+    let input = e.target.value;
+    e.target.value = input.replace(/[^0-9]/g, "");
+});
 
 barcodeInput.addEventListener("input", function (e) {
     let input = e.target.value;
@@ -29,10 +39,16 @@ barcodeInput.addEventListener("input", function (e) {
         if (event.key === "Enter") {
             tombolTransaksi.click();
             setTimeout(function() {
-                inputTransaksiJual.focus();
+                inputTransaksiJual.disabled = true;
+                inputTransaksiJual.value = "";
+                if(Object.keys(cart).length > 0){
+                    inputTransaksiJual.disabled = false;
+                    inputTransaksiJual.focus();
+                }
             }, 500);
         }
     }
+
 
     var startTime = new Date().getTime(); // Waktu mulai permintaan
 
@@ -54,8 +70,8 @@ barcodeInput.addEventListener("input", function (e) {
             var dataSize = xhr.responseText.length; // Ukuran data yang diambil dalam byte
             var speed = (dataSize / timeTaken) * 1000; // Kecepatan dalam byte per detik
     
-            console.log("Waktu yang diperlukan: " + timeTaken + " ms");
-            console.log("Kecepatan: " + speed + " bytes/detik");
+            console.warn("Waktu yang diperlukan: " + timeTaken + " ms");
+            console.warn("Kecepatan: " + speed + " bytes/detik");
             if(timeTaken > 10*1000){
                 loading.innerHTML = "Gagal terhubung ke server..";
             }else{
@@ -74,7 +90,6 @@ barcodeInput.addEventListener("input", function (e) {
     
     xhr.open("GET", "http://" + myHostname + "/getProduk.php", true);
     xhr.send();
-    
 
 function setupKasir(products) {
     barcodeInput.addEventListener('input', () => {
@@ -92,23 +107,21 @@ function setupKasir(products) {
                     cart[barcode].totalPrice = cart[barcode].quantity * princePersenan;
                     cart[barcode].price = princePersenan;
                 } else{
-                    output.innerHTML = '<p>Status : Stok barang habis.</p>';
                     // Tampilkan tombol Clear
                     
-                    document.body.style.backgroundColor = "red";
+                    document.body.style.backgroundColor = "#DC3545";
                     setTimeout(function() {
                         alert(`STOK "`+cart[barcode].name +`" HANYA = ` + cart[barcode].stok );
                         barcodeInput.value = '';
                         barcodeInput.focus();
                         document.body.style.backgroundColor = "";
-                        output.innerHTML = '<p>Status : -</p>';
+                        output.innerHTML = '<p class="text-danger">Status : STOK HANYA = ' + cart[barcode].stok + '</p>';
                     }, 50);
                 }
                 // Jika produk dengan barcode yang sama sudah ada di keranjang, tambahkan jumlahnya
             } else {
                 if(parseInt(product.stok) > 0){
                 // Jika produk belum ada di keranjang, tambahkan ke keranjang
-                inputTransaksiJual.disabled = false;
                 cart[barcode] = {
                     name: product.name,
                     price:  parseInt(princePersenan),
@@ -118,7 +131,14 @@ function setupKasir(products) {
                     stok: parseInt(product.stok)
                 };
                 } else{
-                alert("ANJING");
+                    document.body.style.backgroundColor = "#DC3545";
+                    setTimeout(function() {
+                        alert(`STOK "`+ product.name + `" HABIS"`);
+                        barcodeInput.value = '';
+                        barcodeInput.focus();
+                        document.body.style.backgroundColor = "";
+                        output.innerHTML = '<p class="text-danger">Status : Stok barang habis.</p>';
+                    }, 50);
                 }
 
             }
@@ -146,27 +166,31 @@ function setupKasir(products) {
             const digitTotalHarga = hitungJumlahDigit(totalPriceBos);
 
             const genapHargaTotalRibuan = (Math.floor(totalPriceBos /1000)*1000);
-            const genapHargaTotalRatusan = (Math.floor(totalPriceBos /100)*100);
-            const hasilGenapHarga = genapHargaTotalRatusan - genapHargaTotalRibuan;
-            if(digitTotalHarga < inputDigit){
-                if(hasilGenapHarga > 500){
-                    var hasilDigenapkan = genapHargaTotalRibuan+1000;
-                } else {
-                    var hasilDigenapkan = genapHargaTotalRibuan;
-                }
-            } else if(hasilGenapHarga < 200){
-                var hasilDigenapkan = genapHargaTotalRibuan;
-            } else if(hasilGenapHarga < 500){
-                var hasilDigenapkan = genapHargaTotalRibuan+500;
-            } else if(hasilGenapHarga == 500){
-                var hasilDigenapkan = genapHargaTotalRibuan+500;
-            } else if(hasilGenapHarga > 500){
-                var hasilDigenapkan = genapHargaTotalRibuan+1000;
-            } else{
-                console.error("ini ada error cuk..");
-            }          
-                totalPriceDisplay1.textContent = formatRupiah(hasilDigenapkan);
+            const genapHargaTotalRibuDanRatusan = (Math.floor(totalPriceBos /100)*100);
+            const hasilPenguranganRibuDanRatusan = genapHargaTotalRibuDanRatusan - genapHargaTotalRibuan;
 
+            if(hasilPenguranganRibuDanRatusan < 100){
+                var totalPriceDisplay = genapHargaTotalRibuan;
+                totalPriceDisplay1.textContent = formatRupiah(totalPriceDisplay);
+            }
+            else if(hasilPenguranganRibuDanRatusan < 600){
+                var totalPriceDisplay = genapHargaTotalRibuan + 500;
+                totalPriceDisplay1.textContent = formatRupiah(totalPriceDisplay);
+            }
+            else if(hasilPenguranganRibuDanRatusan > 599){
+                var totalPriceDisplay = genapHargaTotalRibuan + 1000;
+                totalPriceDisplay1.textContent = formatRupiah(totalPriceDisplay);
+            } else {
+                alert("ERROR");
+            }
+
+            // console.log("digitTotalHarga = " + digitTotalHarga);
+            // console.log("genapHargaTotalRibuan = " + genapHargaTotalRibuan);
+            // console.log("genapHargaTotalRibuDanRatusan = " + genapHargaTotalRibuDanRatusan);
+            // console.log("hasilPenguranganRibuDanRatusan = " + hasilPenguranganRibuDanRatusan);
+
+            hasilTotalTransakasi.value = totalPriceDisplay;
+            
             inputTransaksiJual.addEventListener('input', function() {
             if(inputTransaksiJual.value == 0){
                 inputTransaksiJual.value = "";
@@ -182,12 +206,18 @@ function setupKasir(products) {
                 const integerValue = parseInt(sanitizedValue, 10);
     
                     // Setel teks pada elemen <h2> dengan nilai dari elemen <input>
-                    var totalKembalian = integerValue - hasilDigenapkan;
-                    if(integerValue > totalPriceBos){
-                        hasilKembalian.textContent = formatRupiah(totalKembalian)
+                    var totalKembalian = integerValue - totalPriceDisplay;
+
+                    if(integerValue < totalPriceDisplay){
+                        hasilKembalian.textContent = "Rp " + "0.00";
+                    } else if(totalKembalian == 0){
+                        hasilKembalian.textContent = "Rp - PASS -";
+                    } else if(integerValue > totalPriceDisplay){
+                        hasilKembalian.textContent = "Rp " + formatRupiah(totalKembalian);
                     } else {
-                        hasilKembalian.textContent = formatRupiah(0)
+                        console.error("ada error sayang..");
                     }
+                    hasilKembalianTransakasi.value = totalKembalian;
             }
             });
 
@@ -199,7 +229,7 @@ function setupKasir(products) {
             // Kosongkan input barcode
             barcodeInput.value = '';
             
-            output.innerHTML = '<p class="text-success">Status : Produk berhasil ditemukan.</p>';
+            output.innerHTML = '<p class="text-success">Status : Produk berhasil ditambah.</p>';
             // Sembunyikan tombol Clear
             barcodeInput.style.display = 'inline';
         } else {
@@ -207,16 +237,13 @@ function setupKasir(products) {
             inputValue = barcodeInput.value;
 
             if (inputValue.length > 12) {
-                output.innerHTML = '<p>Status : Produk tidak ditemukan.</p>';
-                // Tampilkan tombol Clear
-                
-                document.body.style.backgroundColor = "purple";
+                document.body.style.backgroundColor = "#DC3545";
                 setTimeout(function() {
                     alert("PRODUK TIDAK DITEMUKAN!!")
                     barcodeInput.value = '';
                     barcodeInput.focus();
                     document.body.style.backgroundColor = "";
-                    output.innerHTML = '<p>Status : -</p>';
+                    output.innerHTML = '<p class="text-danger">Status : Produk tidak ditemukan.</p>';
                 }, 50);
                 
             }
@@ -230,8 +257,8 @@ function setupKasir(products) {
             const cartRow = document.createElement('tr');
             cartRow.innerHTML = `
                 <td>${item.name}</td>
-                <td>${item.quantity} ${item.unit} x (Rp${formatRupiah(item.price)})</td>
-                <td><strong>Rp${formatRupiah(item.totalPrice)}</strong></td>
+                <td>${item.quantity} ${item.unit} x (Rp ${formatRupiah(item.price)})</td>
+                <td><strong>Rp ${formatRupiah(item.totalPrice)}</strong></td>
             `;
             cartTableBody.appendChild(cartRow);
         }
@@ -264,3 +291,61 @@ document.addEventListener('keydown', function(event) {
         barcodeInput.focus();
     }
 });
+
+
+
+
+var putXhrTambah = new XMLHttpRequest();
+var putXhr = new XMLHttpRequest();
+
+var putData = cart;
+
+putXhr.onreadystatechange = function () {
+    if (putXhr.readyState === 4) {
+        if (putXhr.status === 200) {
+            document.body.style.backgroundColor = "#198754";
+            document.getElementById("staticBackdrop").style.backgroundColor = "#198754";
+            
+            setTimeout(function() {
+                alert("Transaksi Berhasil..")
+                location.reload();
+            }, 50);
+
+        } else {
+            alert("Gagal memperbarui data. Status: " + putXhr.status)
+            console.error("Gagal memperbarui data. Status: " + putXhr.status);
+        }
+    }
+};
+
+putXhr.onerror = function() {
+    alert("Koneksi ke server terputus")
+    console.error("Koneksi ke server terputus.");
+};
+
+// *========================
+
+
+
+    // Selesai Transaksi jika tekan enter
+    function selesaiTransaksi(event) {
+            if (event.key === "Enter") {
+                if(inputTransaksiJual.value == "" || hasilKembalianTransakasi.value < 0){
+                    inputTransaksiJual.focus();
+                } else {
+                    putXhr.open("PUT", "http://" + myHostname + "/updateProduk.php", true);
+                    putXhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    putXhr.send(JSON.stringify(putData)); // Kirim data dalam format JSON
+                    putXhrTambah.open("PUT", "http://" + myHostname + "/postTransaksi.php", true);
+                    putXhrTambah.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    let varTotal = hasilTotalTransakasi.value;
+                    let varKembalian = hasilKembalianTransakasi.value;
+
+                    var putTambah= {
+                        total: varTotal,
+                        kembalian: varKembalian
+                        };
+                    putXhrTambah.send(JSON.stringify(putTambah)); // Kirim data dalam format JSON
+                }
+            }
+        }

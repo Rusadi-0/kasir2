@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 25, 2023 at 03:53 AM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.7
+-- Waktu pembuatan: 25 Okt 2023 pada 06.49
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produk`
+-- Struktur dari tabel `produk`
 --
 
 CREATE TABLE `produk` (
@@ -33,22 +34,23 @@ CREATE TABLE `produk` (
   `nama` varchar(255) NOT NULL,
   `harga` int(25) NOT NULL,
   `satuan` varchar(8) NOT NULL,
-  `stok` int(10) NOT NULL
+  `stok` int(10) NOT NULL,
+  `img` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `produk`
+-- Dumping data untuk tabel `produk`
 --
 
-INSERT INTO `produk` (`id`, `barcode`, `nama`, `harga`, `satuan`, `stok`) VALUES
-(1, '2', 'anjing', 5000, 'pcs', 999932),
-(2, '3', 'MIE GORENG', 2850, 'pcs', 0),
-(3, '4', 'amsil gelas', 20100, 'pcs', 0);
+INSERT INTO `produk` (`id`, `barcode`, `nama`, `harga`, `satuan`, `stok`, `img`) VALUES
+(1, '8998866107938', 'POSH DEO ROLL ON 50ML/WHITENING', 12400, 'pcs', 1, NULL),
+(2, '3', 'MIE GORENG', 2850, 'pcs', 9999, NULL),
+(3, '4', 'amsil gelas', 20100, 'pcs', 999, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaksi`
+-- Struktur dari tabel `transaksi`
 --
 
 CREATE TABLE `transaksi` (
@@ -59,7 +61,7 @@ CREATE TABLE `transaksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `transaksi`
+-- Dumping data untuk tabel `transaksi`
 --
 
 INSERT INTO `transaksi` (`id`, `waktu`, `total`, `kembalian`) VALUES
@@ -93,29 +95,29 @@ INSERT INTO `transaksi` (`id`, `waktu`, `total`, `kembalian`) VALUES
 --
 
 --
--- Indexes for table `produk`
+-- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `transaksi`
+-- Indeks untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `produk`
+-- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `transaksi`
+-- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;

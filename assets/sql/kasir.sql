@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 25 Okt 2023 pada 06.49
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.3
+-- Generation Time: Oct 25, 2023 at 04:22 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `produk`
+-- Table structure for table `produk`
 --
 
 CREATE TABLE `produk` (
@@ -39,18 +38,18 @@ CREATE TABLE `produk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `produk`
+-- Dumping data for table `produk`
 --
 
 INSERT INTO `produk` (`id`, `barcode`, `nama`, `harga`, `satuan`, `stok`, `img`) VALUES
-(1, '8998866107938', 'POSH DEO ROLL ON 50ML/WHITENING', 12400, 'pcs', 1, NULL),
-(2, '3', 'MIE GORENG', 2850, 'pcs', 9999, NULL),
-(3, '4', 'amsil gelas', 20100, 'pcs', 999, NULL);
+(1, '8998866107938', 'POSH DEO ROLL ON 50ML/WHITENING', 12400, 'pcs', 2, NULL),
+(2, '8998866200301', 'SEDAAP MIE GORENG 90g', 2850, 'pcs', 9999, NULL),
+(3, '8999999706180', 'PEPSODENT WHITE/JUMB 190g', 20100, 'pcs', 999, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi`
+-- Table structure for table `transaksi`
 --
 
 CREATE TABLE `transaksi` (
@@ -61,7 +60,7 @@ CREATE TABLE `transaksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `transaksi`
+-- Dumping data for table `transaksi`
 --
 
 INSERT INTO `transaksi` (`id`, `waktu`, `total`, `kembalian`) VALUES
@@ -88,39 +87,43 @@ INSERT INTO `transaksi` (`id`, `waktu`, `total`, `kembalian`) VALUES
 (74, 1698157356, 33000, 17000),
 (75, 1698157708, 5500, 54500),
 (76, 1698158056, 5500, 84500),
-(77, 1698198606, 22000, 28000);
+(77, 1698198606, 22000, 28000),
+(78, 1698228138, 14000, 6000),
+(79, 1698232083, 82000, 18000),
+(80, 1698240610, 14000, 6000),
+(81, 1698243213, 41000, 9000);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `produk`
+-- Indexes for table `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `transaksi`
+-- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `produk`
+-- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `transaksi`
+-- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

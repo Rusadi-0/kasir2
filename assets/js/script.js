@@ -14,6 +14,8 @@ const hasilKembalian = document.getElementById('hasilKembalian');
 const tombolTransaksi = document.getElementById('tombolTransaksi');
 const hasilTotalTransakasi = document.getElementById('hasilTotalTransakasi');
 const hasilKembalianTransakasi = document.getElementById('hasilKembalianTransakasi');
+const tampilkanFormTransaksi = document.getElementById('tampilkanFormTransaksi');
+const productList = document.getElementById('productList');
 const untungPersen = inputPersenUntung/100;
 const totalPrice = 0;
 const cart = {};
@@ -60,6 +62,7 @@ barcodeInput.addEventListener("input", function (e) {
     
             var products = JSON.parse(xhr.responseText);
             setupKasir(products);
+            produkKasir(products);
     
             var dataSize = xhr.responseText.length; // Ukuran data yang diambil dalam byte
             var speed = (dataSize / timeTaken) * 1000; // Kecepatan dalam byte per detik
@@ -82,6 +85,27 @@ barcodeInput.addEventListener("input", function (e) {
     
     xhr.open("GET", "http://" + myHostname + "/getProduk.php", true);
     xhr.send();
+
+    function produkKasir(products) {
+        for (var barcode in products) {
+            if (products.hasOwnProperty(barcode)) {
+                var product = products[barcode];
+                productList.innerHTML += `
+                
+                <div class="col">
+                <div class="card h-100 shadow border border-0">
+                  <img src="./assets/img/produk/${barcode}.jpg" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
+                  <div class="card-body">
+                    <p class="card-text">${product.name}</p>
+                    <p class="card-text text-primary">Rp${formatRupiah(parseInt(product.price) * untungPersen + parseInt(product.price))}</p>
+                  </div>
+                </div>
+              </div>
+                
+                `;
+            }
+        }
+    }
 
 function setupKasir(products) {
     barcodeInput.addEventListener('input', () => {
@@ -144,7 +168,7 @@ function setupKasir(products) {
             for (const barcode in cart) {
                 totalPriceBos += cart[barcode].totalPrice;
             }
-            totalPriceDisplay0.textContent = formatRupiah(totalPriceBos);
+            totalPriceDisplay0.textContent = "Rp" + formatRupiah(totalPriceBos);
 
             function hitungJumlahDigit(angka) {
                 // Mengonversi angka menjadi string
@@ -201,11 +225,11 @@ function setupKasir(products) {
                     var totalKembalian = integerValue - totalPriceDisplay;
 
                     if(integerValue < totalPriceDisplay){
-                        hasilKembalian.textContent = "Rp " + "0.00";
+                        hasilKembalian.textContent = "Rp" + "0.00";
                     } else if(totalKembalian == 0){
-                        hasilKembalian.textContent = "Rp - PASS -";
+                        hasilKembalian.textContent = "Rp- PASS -";
                     } else if(integerValue > totalPriceDisplay){
-                        hasilKembalian.textContent = "Rp " + formatRupiah(totalKembalian);
+                        hasilKembalian.textContent = "Rp" + formatRupiah(totalKembalian);
                     } else {
                         console.error("ada error sayang..");
                     }
@@ -221,7 +245,7 @@ function setupKasir(products) {
             // Kosongkan input barcode
             barcodeInput.value = '';
             
-            output.innerHTML = '<p class="text-success">Status : Produk berhasil ditambah.</p>';
+            output.innerHTML = '<p class="text-success">Status : Produk berhasil ditambah.(tekan Enter)</p>';
             // Sembunyikan tombol Clear
             barcodeInput.style.display = 'inline';
         } else {
@@ -248,16 +272,32 @@ function setupKasir(products) {
             const item = cart[barcode];
             const cartRow = document.createElement('tr');
             cartRow.innerHTML = `
-                <td>${item.name}</td>
-                <td>${item.quantity} ${item.unit} x (Rp ${formatRupiah(item.price)})</td>
-                <td><strong>Rp ${formatRupiah(item.totalPrice)}</strong></td>
+            <td>
+                <div class="card m-0 border border-0">
+                    <div class="row g-0">
+                    <div class="col-2">
+                        <img src="./assets/img/produk/${barcode}.jpg" class="img-fluid pe-2" alt="...">
+                    </div>
+                    <div class="col-10">
+                        <p class="fw-bold card-text">${item.name}</p>
+                        <div class="d-flex justify-content-between">
+                            <span class="card-text">${item.quantity}x</span>
+                            <span class="card-text text-primary">Rp${formatRupiah(item.totalPrice)}</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+              </td>
             `;
+            tampilkanFormTransaksi.style.display = "block";
             cartTableBody.appendChild(cartRow);
         }
     }
 
     // Fokus ke input saat halaman dimuat
     barcodeInput.focus();
+
+}
 
     // *Fungsi untuk mengonversi harga menjadi format Rupiah
     function formatRupiah(angka) {
@@ -275,7 +315,6 @@ function setupKasir(products) {
         rupiah = split[1] != undefined ? rupiah + '.' + split[1] : rupiah;
         return rupiah;
     }
-}
 
 // * untuk jika menekan tompbol esc
 document.addEventListener('keydown', function(event) {

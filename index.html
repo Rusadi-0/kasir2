@@ -11,15 +11,14 @@
     <link rel="shortcut icon" href="./assets/icon/favicon.ico" type="image/x-icon">
 </head>
 
-<body>
+<body style="background-color: rgb(250, 250, 250);">
     <div id="koneksiServer"  style="display: block;" class="container-fluid">
-        <h1 class="my-3 text-center">Aplikasi Mesin Kasir</h1>
-        <hr>
         <div class="row mt-4">
             <div class="col-md-6 col-lg-5 col-xl-4">
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><i class="bi bi-upc-scan"></i></span>
-                <input pattern="[0-9]*" type="number" min="0" onkeydown="checkEnter(event)" id="barcodeInput" autofocus class="form-control" placeholder="Pindai barcode di sini" aria-label="Pindai barcode di sini" aria-describedby="basic-addon1">
+              <div class="input-group mb-3 shadow-sm">
+                <span class="input-group-text border border-0 bg-white " id="basic-addon1"><i class="bi bi-upc-scan"></i></span>
+                <input pattern="[0-9]*" type="text" min="0" onkeydown="checkEnter(event)" id="barcodeInput" autofocus class=" form-control border border-0 py-2" placeholder="Pindai barcode di sini" aria-label="Pindai barcode di sini" aria-describedby="basic-addon1">
+                <button class="btn btn-primary border-0 " onclick="tombolTransaksi.click()" type="button" id="inputGroupFileAddon04"><i class="bi bi-cart4"></i></button>
               </div>
                 
             </div>
@@ -29,180 +28,16 @@
             </div>
             </div>
         </div>
-            <hr>
-            <div class="row row-cols-sm-2 row-cols-1 row-cols-md-4 row-cols-lg-6  g-4 mb-5 mt-3">
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
+            <div class="row">
+              <div class="col-8">
+                <div id="productList" class="row row-cols-sm-2 row-cols-1 row-cols-md-3 row-cols-lg-4  g-4 mb-5 mt-3">
                 </div>
               </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border border-0">
-                  <img src="./assets/img/rasa-baso_notext.png" class="card-img-top px-4 pt-4" alt="./assets/img/rasa-baso_notext.png">
-                  <div class="card-body">
-                    <h5 class="card-title">Rp 5.000</h5>
-                    <p class="card-text">POP MIE BAKSO</p>
-                  </div>
-                </div>
+              <div class="col-4">
+
               </div>
             </div>
+
 
 
         <button style="display: none;"  id="tombolTransaksi" class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
@@ -210,45 +45,42 @@
         </button>
     </div>
       
-      <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="staticBackdrop" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="staticBackdropLabel"><i class="bi bi-cash-coin"></i> Transaksi</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" onclick="barcodeInput.focus();" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
           <div>
-            <table class="table table-bordered" id="cartTable">
+            <table class="table" id="cartTable">
               <thead>
                   <tr>
-                      <th>Nama Produk</th>
-                      <th>Jumlah</th>
-                      <th>Harga (Rp)</th>
+                      <th></th>
                   </tr>
               </thead>
               <tbody></tbody>
               <thead class="table-group-divider">
                   <tr>
-                      <th colspan="2">TOTAL HARGA</th>
-                      <th><strong>Rp <span class="totalPrice">0.00</span></strong></th>
+                      <th><strong><p class="text-end totalPrice">Keranjang Kosong</p></strong></th>
                   </tr>
               </thead>
           </table>
-            <div class="mb-3 row">
+            <div style="display: none;" id="tampilkanFormTransaksi" class="mb-3 row">
               <div class="col-12 mb-3">
                 <label for="formTransaksiJual" class="form-label">Total Harga digenapkan</label>
-                <h3><strong>Rp <span class="totalPrice">0.00</span></strong></h3>
+                <h3><strong>Rp<span class="totalPrice">0.00</span></strong></h3>
               </div>
               <div class="col-12 mb-3">
                 <label for="formTransaksiJual" class="form-label">Uang Pembeli</label>
                 <div class="col-12 input-group mb-3">
-                    <span class="input-group-text" id="formTransaksiJual">Rp </span>
+                    <span class="input-group-text" id="formTransaksiJual">Rp</span>
                     <input id="inputTransaksiJual" onkeydown="selesaiTransaksi(event)" disabled type="text" min="0" class="form-control" placeholder="0.00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
                 </div>
               </div>
               <div class="col-12">
                 <hr>
                 <label for="formTransaksiJual" class="form-label">Kembalian</label>
-                <h3><strong><span id="hasilKembalian">Rp 0.00</span></strong></h3>
+                <h4><strong><span id="hasilKembalian">Rp0.00</span></strong></h4>
               </div>
                <input type="hidden" id="hasilTotalTransakasi" value="">
                <input type="hidden" id="hasilKembalianTransakasi" value="">

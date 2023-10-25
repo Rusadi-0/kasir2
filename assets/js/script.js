@@ -25,6 +25,13 @@ if(Object.keys(cart).length == 0){
 }
 
 
+function btnCart (){
+    setTimeout(function() {
+        barcodeInput.focus();
+    }, 500);
+
+}
+
 document.getElementById("barcodeInput").addEventListener("input", function (e) {
     let input = e.target.value;
     e.target.value = input.replace(/[^0-9]/g, "");
@@ -126,11 +133,13 @@ function setupKasir(products) {
                     // Tampilkan tombol Clear
                     
                     document.body.style.backgroundColor = "#DC3545";
+                    document.getElementById("staticBackdrop").style.backgroundColor = "#DC3545";
                     setTimeout(function() {
                         alert(`STOK "`+cart[barcode].name +`" HANYA = ` + cart[barcode].stok );
                         barcodeInput.value = '';
                         barcodeInput.focus();
-                        document.body.style.backgroundColor = "";
+                        document.body.style.backgroundColor = "#f2f4f7";
+                        document.getElementById("staticBackdrop").style.backgroundColor = "";
                         output.innerHTML = '<p class="text-danger">Status : STOK HANYA = ' + cart[barcode].stok + '</p>';
                     }, 50);
                 }
@@ -148,11 +157,13 @@ function setupKasir(products) {
                 };
                 } else{
                     document.body.style.backgroundColor = "#DC3545";
+                    document.getElementById("staticBackdrop").style.backgroundColor = "#DC3545";
                     setTimeout(function() {
                         alert(`STOK "`+ product.name + `" HABIS"`);
                         barcodeInput.value = '';
                         barcodeInput.focus();
-                        document.body.style.backgroundColor = "";
+                        document.body.style.backgroundColor = "#f2f4f7";
+                        document.getElementById("staticBackdrop").style.backgroundColor = "";
                         output.innerHTML = '<p class="text-danger">Status : Stok barang habis.</p>';
                     }, 50);
                 }
@@ -254,11 +265,13 @@ function setupKasir(products) {
 
             if (inputValue.length > 12) {
                 document.body.style.backgroundColor = "#DC3545";
+                document.getElementById("staticBackdrop").style.backgroundColor = "#DC3545";
                 setTimeout(function() {
                     alert("PRODUK TIDAK DITEMUKAN!!")
                     barcodeInput.value = '';
                     barcodeInput.focus();
-                    document.body.style.backgroundColor = "";
+                    document.body.style.backgroundColor = "#f2f4f7";
+                    document.getElementById("staticBackdrop").style.backgroundColor = "";
                     output.innerHTML = '<p class="text-danger">Status : Produk tidak ditemukan.</p>';
                 }, 50);
                 
@@ -289,6 +302,7 @@ function setupKasir(products) {
                 </div>
               </td>
             `;
+            inputTransaksiJual.disabled = false;
             tampilkanFormTransaksi.style.display = "block";
             cartTableBody.appendChild(cartRow);
         }

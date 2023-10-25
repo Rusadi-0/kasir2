@@ -11,14 +11,16 @@
     <link rel="shortcut icon" href="./assets/icon/favicon.ico" type="image/x-icon">
 </head>
 
-<body style="background-color: rgb(250, 250, 250);">
+<body style="background-color: rgb(243, 244, 247);">
     <div id="koneksiServer"  style="display: block;" class="container-fluid">
         <div class="row mt-4">
             <div class="col-md-6 col-lg-5 col-xl-4">
-              <div class="input-group mb-3 shadow-sm">
+              <div class="input-group mb-3 shadow rounded">
                 <span class="input-group-text border border-0 bg-white " id="basic-addon1"><i class="bi bi-upc-scan"></i></span>
                 <input pattern="[0-9]*" type="text" min="0" onkeydown="checkEnter(event)" id="barcodeInput" autofocus class=" form-control border border-0 py-2" placeholder="Pindai barcode di sini" aria-label="Pindai barcode di sini" aria-describedby="basic-addon1">
-                <button class="btn btn-primary border-0 " onclick="tombolTransaksi.click()" type="button" id="inputGroupFileAddon04"><i class="bi bi-cart4"></i></button>
+                <button id="tombolTransaksi" onclick="btnCart()" class="btn btn-primary border-0 " type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                  <i class="bi bi-cart4"></i>
+                </button>
               </div>
                 
             </div>
@@ -37,12 +39,6 @@
 
               </div>
             </div>
-
-
-
-        <button style="display: none;"  id="tombolTransaksi" class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-          <i class="bi bi-cash-coin"></i> Transaksi
-        </button>
     </div>
       
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="staticBackdrop" aria-labelledby="offcanvasScrollingLabel">

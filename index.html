@@ -44,39 +44,45 @@
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="staticBackdrop" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="staticBackdropLabel"><i class="bi bi-cash-coin"></i> Transaksi</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" onclick="barcodeInput.focus();" aria-label="Close"></button>
+          <button type="button" id="btnClose" class="btn-close" data-bs-dismiss="offcanvas" onclick="klikClose()" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
+        <div class="offcanvas-body pt-0">
           <div>
-            <table class="table" id="cartTable">
+            <table class="table border-top" id="cartTable">
               <thead>
-                  <tr>
-                      <th></th>
-                  </tr>
               </thead>
               <tbody></tbody>
               <thead class="table-group-divider">
                   <tr>
-                      <th><strong><p class="text-end totalPrice">Keranjang Kosong</p></strong></th>
+                      <th>
+                        <div class="d-flex justify-content-between mb-2" style="display: none;">
+                          <span class="text-start fw-light">Total Barang</span>
+                          <span class="text-end totalPrice text-primary fw-normal">Keranjang Kosong</span>
+                      </div>
+                        <div class="d-flex justify-content-between mb-2">
+                          <span class="text-start fw-light">Harga digenapkan</span>
+                          <span class="text-end totalPrice fw-bold">Keranjang Kosong</span>
+                      </div>
+                      </th>
                   </tr>
               </thead>
           </table>
             <div style="display: none;" id="tampilkanFormTransaksi" class="mb-3 row">
-              <div class="col-12 mb-3">
-                <label for="formTransaksiJual" class="form-label">Total Harga digenapkan</label>
-                <h3><strong>Rp<span class="totalPrice">0.00</span></strong></h3>
-              </div>
-              <div class="col-12 mb-3">
-                <label for="formTransaksiJual" class="form-label">Uang Pembeli</label>
-                <div class="col-12 input-group mb-3">
-                    <span class="input-group-text" id="formTransaksiJual">Rp</span>
-                    <input id="inputTransaksiJual" onkeydown="selesaiTransaksi(event)" disabled type="text" min="0" class="form-control" placeholder="0.00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
+              <div class="col-12 input-group mb-3">
+                <label for="formTransaksiJual" class="form-label">Uang Cash</label>
+                <div id="divFormTransaksiJual" class="col-12 input-group mb-3">
+                    <span class="input-group-text bg-white border-0"  id="formTransaksiJual">Rp</span>
+                    <input id="inputTransaksiJual" onkeydown="selesaiTransaksi(event)" disabled type="text" min="0" class="form-control border-0" placeholder="0.00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
                 </div>
               </div>
               <div class="col-12">
-                <hr>
                 <label for="formTransaksiJual" class="form-label">Kembalian</label>
                 <h4><strong><span id="hasilKembalian">Rp0.00</span></strong></h4>
+                <div class="col-12 mt-4">
+                  <div class="d-grid gap-2">
+                    <button onclick="tombolSelesaiTransakasi()" class="btn btn-primary" type="button">Selesai</button>
+                  </div>
+                  </div>
               </div>
                <input type="hidden" id="hasilTotalTransakasi" value="">
                <input type="hidden" id="hasilKembalianTransakasi" value="">

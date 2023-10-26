@@ -10,24 +10,25 @@ const totalPriceDisplay0 = document.getElementsByClassName('totalPrice')[0];
 const totalPriceDisplay1 = document.getElementsByClassName('totalPrice')[1];
 const koneksiServer = document.getElementById('koneksiServer');
 const inputTransaksiJual = document.getElementById('inputTransaksiJual');
+const formTransaksiJual = document.getElementById('formTransaksiJual');
+const divFormTransaksiJual = document.getElementById("divFormTransaksiJual");
+
 const hasilKembalian = document.getElementById('hasilKembalian');
 const tombolTransaksi = document.getElementById('tombolTransaksi');
 const hasilTotalTransakasi = document.getElementById('hasilTotalTransakasi');
 const hasilKembalianTransakasi = document.getElementById('hasilKembalianTransakasi');
 const tampilkanFormTransaksi = document.getElementById('tampilkanFormTransaksi');
 const productList = document.getElementById('productList');
+const btnClose = document.getElementById('btnClose');
 const untungPersen = inputPersenUntung/100;
 const totalPrice = 0;
 const cart = {};
-if(Object.keys(cart).length == 0){
-    hasilTotalTransakasi.value = "";
-    hasilKembalianTransakasi.value = "";
-}
 
 
 function btnCart (){
     setTimeout(function() {
-        barcodeInput.focus();
+        // barcodeInput.focus();
+        
     }, 500);
 
 }
@@ -45,7 +46,7 @@ barcodeInput.addEventListener("input", function (e) {
     // menekan enter lanjut ke taransaksi
     function checkEnter(event) {
         if (event.key === "Enter") {
-            tombolTransaksi.click();
+            // tombolTransaksi.click();
             setTimeout(function() {
                 inputTransaksiJual.disabled = true;
                 inputTransaksiJual.value = "";
@@ -147,6 +148,10 @@ function setupKasir(products) {
             } else {
                 if(parseInt(product.stok) > 0){
                 // Jika produk belum ada di keranjang, tambahkan ke keranjang
+                if(Object.keys(cart).length < 1){
+                    tombolTransaksi.click();
+                    inputTransaksiJual.value = "";
+                }        
                 cart[barcode] = {
                     name: product.name,
                     price:  parseInt(princePersenan),
@@ -198,15 +203,15 @@ function setupKasir(products) {
 
             if(hasilPenguranganRibuDanRatusan < 100){
                 var totalPriceDisplay = genapHargaTotalRibuan;
-                totalPriceDisplay1.textContent = formatRupiah(totalPriceDisplay);
+                totalPriceDisplay1.textContent = "Rp" + formatRupiah(totalPriceDisplay);
             }
             else if(hasilPenguranganRibuDanRatusan < 600){
                 var totalPriceDisplay = genapHargaTotalRibuan + 500;
-                totalPriceDisplay1.textContent = formatRupiah(totalPriceDisplay);
+                totalPriceDisplay1.textContent = "Rp" + formatRupiah(totalPriceDisplay);
             }
             else if(hasilPenguranganRibuDanRatusan > 599){
                 var totalPriceDisplay = genapHargaTotalRibuan + 1000;
-                totalPriceDisplay1.textContent = formatRupiah(totalPriceDisplay);
+                totalPriceDisplay1.textContent = "Rp" + formatRupiah(totalPriceDisplay);
             } else {
                 alert("ERROR");
             }
@@ -221,6 +226,12 @@ function setupKasir(products) {
             inputTransaksiJual.addEventListener('input', function() {
             if(inputTransaksiJual.value == 0){
                 inputTransaksiJual.value = "";
+                formTransaksiJual.innerHTML = "Rp";
+                formTransaksiJual.classList.remove("text-success");
+                formTransaksiJual.classList.remove("text-danger");
+                divFormTransaksiJual.classList.remove("border", "border-opacity-50","rounded");
+                divFormTransaksiJual.classList.remove("border-danger");
+                divFormTransaksiJual.classList.remove("border-success");
             } else{
                 const sanitizedValue = inputTransaksiJual.value.replace(/\D/g, '');
                 
@@ -237,10 +248,25 @@ function setupKasir(products) {
 
                     if(integerValue < totalPriceDisplay){
                         hasilKembalian.textContent = "Rp" + "0.00";
+                        formTransaksiJual.innerHTML = '<i class="bi bi-x-circle"></i>';
+                        formTransaksiJual.classList.remove("text-success");
+                        formTransaksiJual.classList.add("text-danger");
+                        divFormTransaksiJual.classList.add("border","border-opacity-50","rounded","border-danger");
+                        divFormTransaksiJual.classList.remove("border-success");
                     } else if(totalKembalian == 0){
                         hasilKembalian.textContent = "Rp- PASS -";
+                        formTransaksiJual.innerHTML = '<i class="bi bi-check-circle"></i>';
+                        formTransaksiJual.classList.add("text-success");
+                        formTransaksiJual.classList.remove("text-danger");
+                        divFormTransaksiJual.classList.add("border","border-opacity-50","rounded","border-success");
+                        divFormTransaksiJual.classList.remove("border-danger");
                     } else if(integerValue > totalPriceDisplay){
-                        hasilKembalian.textContent = "Rp" + formatRupiah(totalKembalian);
+                        hasilKembalian.textContent = 'Rp' + formatRupiah(totalKembalian);
+                        formTransaksiJual.innerHTML = '<i class="bi bi-check-circle"></i>';
+                        formTransaksiJual.classList.add("text-success");
+                        formTransaksiJual.classList.remove("text-danger");
+                        divFormTransaksiJual.classList.add("border","border-opacity-50","rounded","border-success");
+                        divFormTransaksiJual.classList.remove("border-danger");
                     } else {
                         console.error("ada error sayang..");
                     }
@@ -294,7 +320,7 @@ function setupKasir(products) {
                     <div class="col-10">
                         <p class="fw-bold card-text">${item.name}</p>
                         <div class="d-flex justify-content-between">
-                            <span class="card-text">${item.quantity}x</span>
+                            <span class="card-text fw-light">${item.quantity}x</span>
                             <span class="card-text text-primary">Rp${formatRupiah(item.totalPrice)}</span>
                         </div>
                     </div>
@@ -333,7 +359,10 @@ function setupKasir(products) {
 // * untuk jika menekan tompbol esc
 document.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-        barcodeInput.focus();
+        btnClose.click();
+        setTimeout(function() {
+            barcodeInput.focus();
+        }, 500);
     }
 });
 
@@ -378,7 +407,16 @@ putXhr.onerror = function() {
                 if(inputTransaksiJual.value == "" || hasilKembalianTransakasi.value < 0){
                     inputTransaksiJual.focus();
                 } else {
-                    putXhr.open("PUT", "http://" + myHostname + "/updateProduk.php", true);
+                    tombolSelesaiTransakasi();
+                }
+            }
+        }
+
+        function tombolSelesaiTransakasi(){
+            if(inputTransaksiJual.value == "" || hasilKembalianTransakasi.value < 0){
+                inputTransaksiJual.focus();
+            } else {
+            putXhr.open("PUT", "http://" + myHostname + "/updateProduk.php", true);
                     putXhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                     putXhr.send(JSON.stringify(putData)); // Kirim data dalam format JSON
                     putXhrTambah.open("PUT", "http://" + myHostname + "/postTransaksi.php", true);
@@ -391,6 +429,5 @@ putXhr.onerror = function() {
                         kembalian: varKembalian
                         };
                     putXhrTambah.send(JSON.stringify(putTambah)); // Kirim data dalam format JSON
-                }
             }
         }

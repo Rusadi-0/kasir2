@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
     <link rel="shortcut icon" href="./assets/icon/favicon.ico" type="image/x-icon">
+     <link rel="stylesheet" href="./assets/css/sweetalert2.min.css">
+     <script src="./assets/js/sweetalert2.all.min.js"></script>
 </head>
 
 <body style="background-color: rgb(243, 244, 247);">
@@ -26,29 +28,30 @@
             </div>
             <div class="col-md-6 col-lg-7 col-xl-8">
               <div id="output">
-                <p>Status : -</p>
+                <p></p>
             </div>
             </div>
         </div>
             <div class="row">
-              <div class="col-8">
-                <div id="productList" class="row row-cols-sm-2 row-cols-1 row-cols-md-3 row-cols-lg-4  g-4 mb-5 mt-3">
+              <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+                <div id="productList" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5  g-4 mb-5 mt-3">
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-sm-0 col-md-0 col-lg-4 col-xl-4 col-xxl-4">
 
               </div>
             </div>
     </div>
       
-      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="staticBackdrop" aria-labelledby="offcanvasScrollingLabel">
+      <div class="offcanvas offcanvas-end shadow" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="staticBackdrop" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="staticBackdropLabel"><i class="bi bi-cash-coin"></i> Transaksi</h5>
-          <button type="button" id="btnClose" class="btn-close" data-bs-dismiss="offcanvas" onclick="klikClose()" aria-label="Close"></button>
+          <button type="button" id="btnClose" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body pt-0">
-          <div>
-            <table class="table border-top" id="cartTable">
+          <p class="text-center mt-5" style="display: block;" id="keranjangKosong"><i style="font-size: 100px;" class="text-secondary bi bi-cart-x"></i><br><span class="text-secondary">Keranjang Kosong</span></p>
+          <div style="display: none;" id="tampilkanFormTransaksi">
+            <table class="table border-top table-hover" id="cartTable">
               <thead>
               </thead>
               <tbody></tbody>
@@ -67,20 +70,20 @@
                   </tr>
               </thead>
           </table>
-            <div style="display: none;" id="tampilkanFormTransaksi" class="mb-3 row">
-              <div class="col-12 input-group mb-3">
+            <div class="my-3 row">
+              <div class="col-12 input-group">
                 <label for="formTransaksiJual" class="form-label">Uang Cash</label>
-                <div id="divFormTransaksiJual" class="col-12 input-group mb-3">
-                    <span class="input-group-text bg-white border-0"  id="formTransaksiJual">Rp</span>
+                <div id="divFormTransaksiJual" class="col-12 input-group mb-3 rounded border-opacity-50 border">
+                    <span class="input-group-text bg-white border-0 mx-1"  id="formTransaksiJual">Rp</span>
                     <input id="inputTransaksiJual" onkeydown="selesaiTransaksi(event)" disabled type="text" min="0" class="form-control border-0" placeholder="0.00" aria-label="formTransaksiJual" aria-describedby="formTransaksiJual">
                 </div>
               </div>
               <div class="col-12">
                 <label for="formTransaksiJual" class="form-label">Kembalian</label>
-                <h4><strong><span id="hasilKembalian">Rp0.00</span></strong></h4>
+                <h6><strong><span id="hasilKembalian">Rp0.00</span></strong></h6>
                 <div class="col-12 mt-4">
                   <div class="d-grid gap-2">
-                    <button onclick="tombolSelesaiTransakasi()" class="btn btn-primary" type="button">Selesai</button>
+                    <button onclick="tombolSelesaiTransakasi()" class="btn btn-primary" type="button"><i class="bi bi-bag-check"></i> Selesai</button>
                   </div>
                   </div>
               </div>
@@ -90,6 +93,13 @@
           </div>
         </div>
       </div>
+
+
+      <!-- * MODAL -->
+
+<!-- Modal -->
+
+
 
 <script src="./assets/js/script.js"></script>
 <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
